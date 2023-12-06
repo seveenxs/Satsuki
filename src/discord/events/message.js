@@ -1,4 +1,6 @@
 const MESSAGE = require('../../constants/messages.json');
+const { Perms } = require('../../constants/permissions.json');
+
 const { FormatEmoji } = require('../../functions');
 const { userDB } = require('../../mongoDB');
 
@@ -8,7 +10,7 @@ module["exports"] = {
         if(message.author.bot) return;
 
         if(message.content.replace('!', '').startsWith(`<@${client.user?.id}>`))
-        return message.channel.send(FormatEmoji(`> - {e:exclamação} Prazer, **\` ${message.author.username} \`** eu me chamo **Satsuki** uma incrível bot **multifuncional**, use **\` ${client.prefix}ajuda \`** para ver os meus comandos. ate logo!`));
+        return message.channel.send(FormatEmoji(`> - {e:exclamação} Prazer **\` ${message.author.username} \`**, eu me chamo **Satsuki** uma incrível bot **multifuncional** para o seu servidor, use [ **${client.prefix}ajuda** ] para ver os meus comandos.`));
 
         if(!message.content.startsWith(client.prefix) || !message.guild) return;
 
@@ -28,9 +30,38 @@ module["exports"] = {
         const mentionArgs = !!mentions ? true : !!mentioned ? true : false;
 
         const messageDB = !_userDB ? MESSAGE.DATABASE.AUTHOR : MESSAGE.DATABASE.MENTIONED;
-
+        
         if (!_userDB && command.name !== "verificar" || mentionedDB && mentionArgs)
         return message.channel.send(FormatEmoji(messageDB.replace(/<name>|<command>/g, (matched) => { return matched === "<name>" ? message.author.username : `${client.prefix}verificar` })));
 
+        const messageBl = _userDB.blacklist["isBlacklisted"] ? MESSAGE.BLACKLISTED.AUTHOR : MESSAGE.BLACKLISTED.MENTIONED;
+
+        if (_userDB?.blacklist["isBlacklisted"] || mentionedDB?.blacklist["isBlacklisted"] && mentionArgs)
+        return message.channel.send(FormatEmoji(messageBl.replace(/<name>|<command>/g, (matched) => { return matched === "<name>" ? message.author.username : `${client.prefix}suporte` })));
+
+        const TranslatePerms = (input) => {
+            return input.map(permission => Perms[permission] || input).join(', ');
+        };
+
+        if (command.AuthorPerms && !message.member.permissions.has(command.AuthorPerms || []))
+        return message.channel.send(FormatEmoji(MESSAGE.PERMISSIONS.AUTHOR.replace(/<name>|<permissions>/g, (matched) => { return matched === "<name>" ? message.author.username : TranslatePerms(command.AuthorPerms) })));
+
+        if (command.HarukaPerms && !message.guild.members.cache.get(client.user.id).permissions.has(command.HarukaPerms || []))
+        return message.channel.send(FormatEmoji(MESSAGE.PERMISSIONS.CLIENT.replace(/<name>|<permissions>/g, (matched) => { return matched === "<name>" ? message.author.username : TranslatePerms(command.HarukaPerms) })));
+
+        const miliseconds = client.cooldowns.get(`${message.author.id}-${command.name}`) / 1000;
+
+        if (client.cooldowns.has(`${message.author.id}-${command.name}`))
+        return message.channel.send(FormatEmoji(MESSAGE.COOLDOWNS.replace(/<name>|<cooldown>/g, (matched) => { return matched === "<name>" ? message.author.username : Math.trunc(miliseconds) })));
+
+        client.cooldowns.set(`${message.author.id}-${command.name}`, Date.now() + 7000);
+        setTimeout(() => { client.cooldowns.delete(`${message.author.id}-${command.name}`) }, 7000);
+
+        try {
+            command.runner(client, message, params);
+        } catch (error) {
+            console.error('Erro ao executar o comando:', error);
+            message.channel.send('um erro ocorreu ao executar o comando!');
+        }            
     }
 }

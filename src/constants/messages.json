@@ -1,6 +1,21 @@
 {
     "DATABASE": {
-        "AUTHOR": "ei <name> use <command> ai pó",
-        "MENTIONED": "ei <name> o cabaço do usuário mencionado ta sem registro"
-    }
+        "AUTHOR": "> - {e:database} Ei, **` <name> `**, verifiquei em meu **banco de dados** e não encontrei dados seus, use [ **<command>** ] para se **verificar**, e ter acesso aos meus comandos.",
+        
+        "MENTIONED": "> - {e:database} Ei, **` <name> `** o usuário **especificado** não possui dados em meu **banco de dados**, portanto a **execução** desse comando não e possível."
+    },
+
+    "BLACKLISTED": {
+        "AUTHOR": "> - {e:error} Ei, `<name>`, você foi **banido** do uso dos meus **comandos**. para mais **informações** entre em contato com o meu servidor de **suporte**. \n\n> - {e:exclamation} **Dica**: Use o comando [ `<command>` ] para obter informações sobre o meu servidor de suporte. talvez você tenha uma mínima chance.",
+        
+        "MENTIONED": "> - {e:error} Ei, `<name>`, o **usuário** especificado foi **banido** do uso dos meus **comandos**. portanto a **execução** desse comando não e possível."
+    },
+
+    "PERMISSIONS": {
+        "AUTHOR": "> - {e:error} `<name>`, você não tem as **permissões** necessárias para a execução desse **comando**, é necessário as seguintes **permissões**: [ `<permissions>` ]",
+
+        "CLIENT": "> - {e:error} Ei, `<name>`, eu não tenho as **permissões** necessárias para a execução desse **comando**, eu preciso das seguintes **permissões**: [ `<permissions>` ]"
+    },
+
+    "COOLDOWNS": "> - **(⏰)** **›** `<name>`, você está **usando** os meus **comandos** rápido demais, você poderá **executar** outro comando [ <t:<cooldown>:R> ]."
 }
