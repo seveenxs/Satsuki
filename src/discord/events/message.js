@@ -34,7 +34,7 @@ module["exports"] = {
         if (!_userDB && command.name !== "verificar" || mentionedDB && mentionArgs)
         return message.channel.send(FormatEmoji(messageDB.replace(/<name>|<command>/g, (matched) => { return matched === "<name>" ? message.author.username : `${client.prefix}verificar` })));
 
-        const messageBl = _userDB.blacklist["isBlacklisted"] ? MESSAGE.BLACKLISTED.AUTHOR : MESSAGE.BLACKLISTED.MENTIONED;
+        const messageBl = _userDB?.blacklist["isBlacklisted"] ? MESSAGE.BLACKLISTED.AUTHOR : MESSAGE.BLACKLISTED.MENTIONED;
 
         if (_userDB?.blacklist["isBlacklisted"] || mentionedDB?.blacklist["isBlacklisted"] && mentionArgs)
         return message.channel.send(FormatEmoji(messageBl.replace(/<name>|<command>/g, (matched) => { return matched === "<name>" ? message.author.username : `${client.prefix}suporte` })));
@@ -61,7 +61,6 @@ module["exports"] = {
             command.runner(client, message, params);
         } catch (error) {
             console.error('Erro ao executar o comando:', error);
-            message.channel.send('um erro ocorreu ao executar o comando!');
         }            
     }
 }
