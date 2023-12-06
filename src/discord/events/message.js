@@ -1,3 +1,4 @@
+const MESSAGE = require('../../constants/messages.json');
 const { FormatEmoji } = require('../../functions');
 const { userDB } = require('../../mongoDB');
 
@@ -22,9 +23,14 @@ module["exports"] = {
         const userCache = client.users.cache;
         const mentioned = userCache.get(params[0]) || userCache.find(user => user.username === params[0]) || mentions.first();
 
-        const userDB = await userDB.findById(message.author.id);
-        const mentioneDB = await userDB.findById(mentioned?.id);
+        const _userDB = await userDB.findById(message.author.id);
+        const mentionedDB = await userDB.findById(mentioned?.id);
         const mentionArgs = !!mentions ? true : !!mentioned ? true : false;
+
+        const messageDB = !_userDB ? MESSAGE.DATABASE.AUTHOR : MESSAGE.DATABASE.MENTIONED;
+
+        if (!_userDB && command.name !== "verificar" || mentionedDB && mentionArgs)
+        return message.channel.send(FormatEmoji(messageDB.replace(/<name>|<command>/g, (matched) => { return matched === "<name>" ? message.author.username : `${client.prefix}verificar` })));
 
     }
 }

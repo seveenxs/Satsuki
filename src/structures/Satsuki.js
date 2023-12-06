@@ -1,6 +1,6 @@
 const { Client, Collection } = require('discord.js');
 const Table = require('cli-table3');
-const { globSync } = require('glob');
+const fs = require('fs')
 const colors = require('colors');
 
 module["exports"] = class Satsuki extends Client {
@@ -20,7 +20,9 @@ module["exports"] = class Satsuki extends Client {
 
     async setup() {
         try {
-            this.#Handler();
+            this.#HandlerCommands();
+            this.#HandlerEvents()
+            this.#HandlerComponents();
 
             await super.login(this.token);
             console.log(`${this.user.username.magenta.bold} foi conectada com sucesso.`);
@@ -29,40 +31,61 @@ module["exports"] = class Satsuki extends Client {
         }
     }
 
-    #Handler() {
-        const dirCommands = `./src/discord/commands/**/*.js`;
-        const dirEvents = `./src/discord/events/**/*.js`;
-        const dirComponents = `./src/discord/components/**/*.js`;
+    #HandlerCommands() {
+        const table = new Table({ head: [colors.cyan('comandos'), colors.blue('status')] });
 
-        const tableCommand = new Table({ head: [colors.cyan('comandos'), colors.blue('status')] });
-        const tableEvents = new Table({ head: [colors.cyan('eventos'), colors.blue('status')] });
-        const tableComponents = new Table({ head: [colors.cyan('componentes'), colors.blue('status')] });
+        fs.readdirSync('./src/discord/commands').forEach(directory => {
+            const commandFiles = fs.readdirSync(`./src/discord/commands/${directory}/`).filter(cmdFile => cmdFile.endsWith(".js"));
+    
+            commandFiles.forEach(file => {
+                const command = require(`../discord/commands/${directory}/${file}`);
+                if (!command) return;
+    
+                this.commands.set(command.name, command);
 
-        globSync(dirCommands).forEach(async (cmdFiles) => {
-            const command = require(`../../${cmdFiles}`);
-            this.commands.set(command.name, command);
-
-            tableCommand.push([command.name, 'sucesso']);
+                table.push([command.name.white, 'sucesso'.white])
+            });
         });
 
-        globSync(dirEvents).forEach(async (evtFiles) => {
-            const event = require(`../../${evtFiles}`);
+        console.log(table.toString());
+    }
 
-            if (event.once) this.once(event.type, (...args) => { event.runner(this, ...args) });
-            else this.once(event.type, (...args) => { event.runner(this, ...args) });
+    #HandlerEvents () {
+        const table = new Table({ head: [colors.cyan('eventos'), colors.blue('status')] });
 
-            tableEvents.push([event.type, 'sucesso']);
+        fs.readdirSync('./src/discord/events').forEach(files => {
+            const events = require(`../discord/events/${files}`);
+            if (!events.type) return;
+
+            if (events.once) {
+                this.once(events.type, (...args) => {
+                    events.runner(this, ...args);
+                })
+            } else {
+                this.on(events.type, (...args) => {
+                    events.runner(this, ...args);
+                })
+            }
+            table.push([events.type.white, 'sucesso'.white])
         });
 
-        globSync(dirComponents).forEach(async (cmpFiles) => {
-            const component = require(`../../${cmpFiles}`);
-            this.components.set(component.id, component);
+        console.log(table.toString());
+    }
 
-            tableComponents.push([component.id, 'sucesso'])
+    #HandlerComponents () {
+        fs.readdirSync('./src/discord/components').forEach(directory => {
+            const componentFile = fs.readdirSync(`./src/discord/components/${directory}/`).filter(cmpFile => cmpFile.endsWith(".js"));
+
+            componentFile.forEach(file => {
+                const components = require(`../discord/components/${directory}/${file}`);
+                if (!components) return;
+
+                if (!components || !Array.isArray(components)) return;
+
+                components.forEach(component => {
+                this.components.set(component.customId, component);
+            });
+            })
         });
-
-        console.log(tableCommand.toString());
-        console.log(tableEvents.toString())
-        console.log(tableComponents.toString())
     }
 }
