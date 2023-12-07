@@ -1,0 +1,9 @@
+{
+    "presents": {
+        "prismatic": {
+            "name": "presente prismático",
+            "emoji": "{gift01a}",
+            "drops": { "cristais": [1000, 7999] }
+        }
+    }
+}

@@ -21,6 +21,8 @@ module["exports"] = {
         if (!command) return;
         if (command.devops && client.developers.includes(message.author.id)) return;
 
+        //if (!client.developers.includes(message.author.id)) return message.channel.send('**EM DESENVOLVIMENTO**')
+
         const mentions = message.mentions.users;
         const userCache = client.users.cache;
         const mentioned = userCache.get(params[0]) || userCache.find(user => user.username === params[0]) || mentions.first();
@@ -36,7 +38,7 @@ module["exports"] = {
 
         const messageBl = _userDB?.blacklist["isBlacklisted"] ? MESSAGE.BLACKLISTED.AUTHOR : MESSAGE.BLACKLISTED.MENTIONED;
 
-        if (_userDB?.blacklist["isBlacklisted"] || mentionedDB?.blacklist["isBlacklisted"] && mentionArgs)
+        if (_userDB?.blacklist["isBlacklisted"] && command.name !== "suporte" || mentionedDB?.blacklist["isBlacklisted"] && mentionArgs)
         return message.channel.send(FormatEmoji(messageBl.replace(/<name>|<command>/g, (matched) => { return matched === "<name>" ? message.author.username : `${client.prefix}suporte` })));
 
         const TranslatePerms = (input) => {

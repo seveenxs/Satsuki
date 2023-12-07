@@ -73,6 +73,8 @@ module["exports"] = class Satsuki extends Client {
     }
 
     #HandlerComponents () {
+        const table = new Table({ head: [colors.cyan('componentes'), colors.blue('status')] });
+
         fs.readdirSync('./src/discord/components').forEach(directory => {
             const componentFile = fs.readdirSync(`./src/discord/components/${directory}/`).filter(cmpFile => cmpFile.endsWith(".js"));
 
@@ -83,9 +85,12 @@ module["exports"] = class Satsuki extends Client {
                 if (!components || !Array.isArray(components)) return;
 
                 components.forEach(component => {
-                this.components.set(component.customId, component);
+                this.components.set(component.id, component);
+                table.push([component.id.white, 'sucesso'.white])
+                });
             });
-            })
         });
+
+        console.log(table.toString())
     }
 }

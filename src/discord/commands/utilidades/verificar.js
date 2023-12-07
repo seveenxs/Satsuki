@@ -15,8 +15,8 @@ module["exports"] = {
 
         registerUser(message.author.id)
         .then(async () => {
-            message.channel.send(FormatEmoji(`> - {e:database} Ei **\` ${message.author.username} \`**, parabéns, você ganhou um {gift01a} **presente de cristais** por se verificar, para ver os presente que você possui use: [ **${client.prefix}presentes** ]`));
-            await IncrementPresent(message.author.id, 'cristal', 1);
+            message.channel.send(FormatEmoji(`> - {e:database} Ei **\` ${message.author.username} \`**, parabéns, você ganhou um {gift01a} **presente prismático** por se verificar, para ver os presentes que você possui use: [ **${client.prefix}presentes** ]`));
+            await IncrementPresent(message.author.id, 'prismatic', 1);
         })
         .catch(() => {
             message.channel.send(FormatEmoji(`> - {e:database} Ei **\` ${message.author.username} \`**, não foi possível salvar seus dados em meu **banco de dados**. por favor, **tente novamente**. se o problema **persistir**, entre em contato com meu **suporte**.`))
