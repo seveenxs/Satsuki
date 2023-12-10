@@ -23,5 +23,15 @@ module["exports"] = {
             params.shift()
             if (selectmenu) selectmenu.runner(client, interaction, params);
         }
+
+
+        if (interaction.isButton()) {
+            const params = (interaction.customId.match(/\[([^\]]*)\]/) || [, ''])[1].split(',').map(param => param.trim());
+
+            const Button = params.length > 0 ? client.components.get(params[0]) : client.components.get(interaction.customId);
+
+            params.shift()
+            if (Button) Button.runner(client, interaction, params);
+        }
     }
 }

@@ -1,4 +1,4 @@
-const { EmbedBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, ActionRowBuilder, ActionRow } = require('discord.js');
+const { EmbedBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, ActionRowBuilder } = require('discord.js');
 const { presents } = require('../../../constants/presents.json');
 const { getUser } = require('../../../mongoDB/functions/user');
 const { FormatEmoji } = require('../../../functions');

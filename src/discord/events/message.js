@@ -19,7 +19,7 @@ module["exports"] = {
         const command = client.commands.get(cmdName) || client.commands.find(als => als.aliases?.includes(cmdName));
 
         if (!command) return;
-        if (command.devops && client.developers.includes(message.author.id)) return;
+        if (command.devops && !client.developers.includes(message.author.id)) return;
 
         //if (!client.developers.includes(message.author.id)) return message.channel.send('**EM DESENVOLVIMENTO**')
 
@@ -29,11 +29,11 @@ module["exports"] = {
 
         const _userDB = await userDB.findById(message.author.id);
         const mentionedDB = await userDB.findById(mentioned?.id);
-        const mentionArgs = !!mentions ? true : !!mentioned ? true : false;
+        const mentionArgs = !!mentions.size ? true : !!mentioned?.id ? true : false;
 
         const messageDB = !_userDB ? MESSAGE.DATABASE.AUTHOR : MESSAGE.DATABASE.MENTIONED;
         
-        if (!_userDB && command.name !== "verificar" || mentionedDB && mentionArgs)
+        if (!_userDB && command.name !== "verificar" || !mentionedDB && mentionArgs)
         return message.channel.send(FormatEmoji(messageDB.replace(/<name>|<command>/g, (matched) => { return matched === "<name>" ? message.author.username : `${client.prefix}verificar` })));
 
         const messageBl = _userDB?.blacklist["isBlacklisted"] ? MESSAGE.BLACKLISTED.AUTHOR : MESSAGE.BLACKLISTED.MENTIONED;
@@ -53,7 +53,7 @@ module["exports"] = {
 
         const miliseconds = client.cooldowns.get(`${message.author.id}-${command.name}`) / 1000;
 
-        if (client.cooldowns.has(`${message.author.id}-${command.name}`))
+        if (command.category !== "desenvolvedor" && client.cooldowns.has(`${message.author.id}-${command.name}`))
         return message.channel.send(FormatEmoji(MESSAGE.COOLDOWNS.replace(/<name>|<cooldown>/g, (matched) => { return matched === "<name>" ? message.author.username : Math.trunc(miliseconds) })));
 
         client.cooldowns.set(`${message.author.id}-${command.name}`, Date.now() + 7000);

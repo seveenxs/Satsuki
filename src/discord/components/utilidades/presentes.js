@@ -2,14 +2,16 @@ const { EmbedBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, Ac
 const { IncrementCrystals, DecrementPresent, getUser } = require('../../../mongoDB/functions/user');
 const { presents } = require('../../../constants/presents.json');
 const { FormatEmoji } = require('../../../functions');
-const { userDB } = require('../../../mongoDB');
 
 module["exports"] = [{
     id: "presentsOpen",
     runner: async (client, interaction, params) => {
         if (interaction.user.id !== params[0]) return interaction.deferUpdate();
         const presentsValue = interaction.values[0];
-        if (presentsValue === 'nothing') return interaction.deferUpdate();
+        if (presentsValue === "noting") {
+            interaction.deferUpdate();
+            return;
+        }
 
         await DecrementPresent(interaction.user.id, presentsValue, 1)
         const userData = await getUser(interaction.user.id, ["presents", "premium"]);
