@@ -30,6 +30,7 @@ module["exports"] = class Satsuki extends Client {
             console.error(`Ocorreu um erro ao se conectar com o cliente:`, error);
         }
     }
+    
 
     #HandlerCommands() {
         const table = new Table({ head: [colors.cyan('comandos'), colors.blue('status')] });

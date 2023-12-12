@@ -1,21 +1,21 @@
 {
     "DATABASE": {
-        "AUTHOR": "> - {e:database} Ei, **` <name> `**, verifiquei em meu **banco de dados** e não encontrei dados seus, use [ **<command>** ] para se **verificar**, e ter acesso aos meus comandos.",
+        "AUTHOR": "> - {e:database} Ei, **<name>**, verifiquei em meu **banco de dados** e não encontrei dados seus, use o comando [ **<command>** ], e **obtenha acesso** aos meus comandos.",
         
-        "MENTIONED": "> - {e:database} Ei, **` <name> `** o usuário **especificado** não possui dados em meu **banco de dados**, portanto a **execução** desse comando não e possível."
+        "MENTIONED": "> - {e:database} Ei, **<name>**, o usuário **especificado** não está registrado em meu **banco de dados**, portanto a **execução** do comando não e possível."
     },
 
     "BLACKLISTED": {
-        "AUTHOR": "> - {e:error} Ei, `<name>`, você foi **banido** do uso dos meus **comandos**. para mais **informações** entre em contato com o meu servidor de **suporte**. \n\n> - {e:exclamation} **Dica**: Use o comando [ `<command>` ] para obter informações sobre o meu servidor de suporte. talvez você tenha uma mínima chance.",
+        "AUTHOR": "> - {e:remove} Ei, **<name>**, você foi **proibido** de utilizar os meus **comandos**. para obter mais **informações** entre em contanto com o meu **suporte** em **meu servidor**.",
         
-        "MENTIONED": "> - {e:error} Ei, `<name>`, o **usuário** especificado foi **banido** do uso dos meus **comandos**. portanto a **execução** desse comando não e possível."
+        "MENTIONED": "> - {e:remove} Ei, **<name>**, o usuário fornecido está **proibido** do uso dos meus **comandos**. portanto a **execução** do comando não será possível."
     },
 
     "PERMISSIONS": {
-        "AUTHOR": "> - {e:error} `<name>`, você não tem as **permissões** necessárias para a execução desse **comando**, é necessário as seguintes **permissões**: [ `<permissions>` ]",
+        "AUTHOR": "> - {e:remove} Poxa, **<name>**, você não tem as **permissões necessárias** para executar esse **comando**, você precisa das **permissões**: <permissions>",
 
-        "CLIENT": "> - {e:error} Ei, `<name>`, eu não tenho as **permissões** necessárias para a execução desse **comando**, eu preciso das seguintes **permissões**: [ `<permissions>` ]"
+        "CLIENT": "> - {e:remove} Poxa, **<name>**, eu não tenho as **permissões necessárias** para executar o **comando**, eu preciso das **permissões**: <permissions>"
     },
 
-    "COOLDOWNS": "> - **(⏰)** **›** `<name>`, você está **usando** os meus **comandos** rápido demais, você poderá **executar** outro comando [ <t:<cooldown>:R> ]."
+    "COOLDOWNS": "> - **(⏰) ›** Calma aí, **<name>**! você está **usando** os meus **comandos** rápido demais, você poderá **executar** outro comando [ <t:<cooldown>:R> ]."
 }

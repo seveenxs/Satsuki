@@ -1,14 +1,16 @@
 const { userDB } = require("../../mongoDB");
 const MESSAGE = require('../../constants/messages.json');
 const { FormatEmoji } = require("../../functions");
+const { GuildPrefix } = require('../../mongoDB/functions/guild');
 
 module["exports"] = {
     type: 'interactionCreate',
     runner: async (client, interaction) => {
         const _userDB = await userDB.findById(interaction.user.id);
+        const prefix = await GuildPrefix(interaction.guild.id);
 
         if (_userDB?.blacklist["isBlacklisted"])
-        return interaction.reply({ content: FormatEmoji(MESSAGE.BLACKLISTED.AUTHOR.replace(/<name>|<command>/g, (matched) => { return matched === "<name>" ? interaction.user.username : `${client.prefix}suporte` })), ephemeral: true });
+        return interaction.reply({ content: FormatEmoji(MESSAGE.BLACKLISTED.AUTHOR.replace(/<name>|<command>/g, (matched) => { return matched === "<name>" ? interaction.user.username : `${prefix}suporte` })), ephemeral: true });
 
         if (interaction.message.createdTimestamp < (client.readyTimestamp || 0)) {
             interaction.message.edit({ components: [] });
@@ -20,8 +22,11 @@ module["exports"] = {
 
             const selectmenu = params.length > 0 ? client.components.get(params[0]) : client.components.get(interaction.customId);
 
+            if (selectmenu.authorOnly && interaction.user.id !== params[1])
+            return interaction.deferUpdate();
+
             params.shift()
-            if (selectmenu) selectmenu.runner(client, interaction, params);
+            if (selectmenu) selectmenu.runner(client, interaction, params, prefix);
         }
 
 

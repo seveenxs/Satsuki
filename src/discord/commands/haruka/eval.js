@@ -5,8 +5,12 @@ module.exports = {
     name: 'eval',
     aliases: ["e", "ev", "evaldro", "evandro", "edivaldo", "escovaldo"],
     devops: true,
-    AuthorPerms: ['Administrator'],
-    category: 'desenvolvedor',
+    SatsukiPerms: ['Administrator', 'AttachFiles'],
+    infos: {
+        description: "Executar códigos",
+        category: "desenvolvedor",
+        usage: "eval"
+    },
     runner: async (client, message, args) => {
         try {
             const code = args.join(" ");

@@ -3,6 +3,7 @@ require('dotenv').config();
 require('colors');
 
 const user = require('./schemas/userschema');
+const guild = require('./schemas/serverschema');
 
 mongoose.connect(process.env.database)
     .then(() => {
@@ -13,5 +14,6 @@ mongoose.connect(process.env.database)
     });
 
 module.exports = {
-    userDB: user
+    userDB: user,
+    guildDB: guild
 };

@@ -1,10 +1,19 @@
 {
     "Global": {
-        "exclamação": "<:exclamacao:1177865640095256666>",
+        "exclamação": "<:exclamation:1183568603795165245>",
+        "interrogação": "<:interrogation:1183534431898705930>",
+        "link": "<:chain:1183535154703110274>",
+        "chat": "<:chat:1183330452958887966>",
         "database": "<:database:1180847893515616357>",
-        "error": "<:Erro:1175054175386738760>",
+        "remove": "<:remove:1183319220528885780>",
         "gift01a": "<:gift_01a:1180565489324413078>",
-        "peixe": "<:fish:1183257651489013870>",
-        "cristais": "<:cristal:1175162055058272266>"
+        "correct": "<:correct:1183321895953772606>",
+        "cristais": "<:crystal:1183725715670179870>",
+
+        "inicio": "<:home:1183576673694797845>",
+        "utilidades": "<:setting:1183576670133821491>",
+        "moderação": "<:shield:1183768377337053274>",
+        "diversão": "<:emoji:1183576671576674324>",
+        "economia": "<:moneybag3:1183576667776635010>"
     }
 }
