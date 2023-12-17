@@ -44,7 +44,7 @@ module["exports"] = class Satsuki extends Client {
     
                 this.commands.set(command.name, command);
 
-                table.push([command.name.white, 'sucesso'.white])
+                table.push([command.name?.white, 'sucesso'.white])
             });
         });
 

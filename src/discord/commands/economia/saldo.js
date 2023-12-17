@@ -22,7 +22,7 @@ module["exports"] = {
         const getCrystals = await getUser(finalUser.id, ["crystals"]);
 
         message.reply({
-            content: FormatEmoji(`> - {e:cristais} **${message.author.username}**, ${finalUser?.id === message.author.id ? 'você' : `**${finalUser?.username}**`} possui um total de **${getCrystals.toLocaleString()} [${abbreviate(getCrystals)}]** cristais em seu saldo. é está ocupando **#${IndexPosition} posição** na classificação dos que mais **contém cristais**.`)
+            content: FormatEmoji(`> - {e:cristais} **${message.author.username}**, ${finalUser?.id === message.author.id ? 'você' : `**${finalUser?.username}**`} possui um total de **${getCrystals.toLocaleString()} [${abbreviate(getCrystals)}]** cristais em seu saldo. ocupando **#${IndexPosition} posição** na classificação dos que mais **possuem cristais**.`)
         })
     }
 }

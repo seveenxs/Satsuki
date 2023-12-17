@@ -47,7 +47,7 @@ module["exports"] = [{
         const row = new ActionRowBuilder().addComponents(menu);
 
         const embedHelp = new EmbedBuilder()
-            .setThumbnail('https://i.imgur.com/0ib86Io.png')
+            .setThumbnail('https://i.imgur.com/eLPEX8F.png')
             .setTimestamp()
             .setFooter({ text: `Executado por: ${interaction.user.username}` })
             .setColor('327ba8');

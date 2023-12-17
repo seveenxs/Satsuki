@@ -35,7 +35,7 @@ module["exports"] = {
                     inline: true
                 }
             ])
-            .setThumbnail('https://i.imgur.com/0ib86Io.png')
+            .setThumbnail('https://i.imgur.com/eLPEX8F.png')
             .setTimestamp()
             .setFooter({ text: `Executado por: ${message.author.username}` })
             .setColor('327ba8');

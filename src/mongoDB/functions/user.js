@@ -19,6 +19,24 @@ async function getUser(id, keys) {
         else return result
 }
 
+async function getCooldown(id, type) {
+    const status = await hasRegister(id);
+    if (!status) return;
+
+    const search = await getUser(id, ["cooldowns"]);
+    const result = search.get(type);
+
+    if (!result) return;
+    return result
+}
+
+async function setCooldown(id, type, value) {
+    const status = await hasRegister(id);
+    if (!status) return;
+    const userCooldown = await userDB.findOneAndUpdate({ _id: id}, { $set: { [`cooldowns.${type}`]:  value } });
+    return userCooldown;
+}
+
 async function IncrementPresent(id, type, quantity) {
     const status = await hasRegister(id);
     if (!status) return;
@@ -43,6 +61,7 @@ async function DecrementCrystals(id, quantity) {
     await userDB.findOneAndUpdate({ _id: id}, { $inc: { "crystals": -quantity } });
 }
 
+
 module["exports"] = {
     hasRegister,
     registerUser,
@@ -51,5 +70,7 @@ module["exports"] = {
     IncrementCrystals,
     DecrementPresent,
     DecrementCrystals,
+    setCooldown,
+    getCooldown,
     getUser
 }

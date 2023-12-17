@@ -12,7 +12,7 @@ module["exports"] = {
     runner: async (client, message) => {
         if(message.author.bot) return;
 
-        const prefix = "$" //await GuildPrefix(message.guild.id);
+        const prefix = "s!"; //await GuildPrefix(message.guild.id);
 
         if(message.content.replace('!', '').startsWith(`<@${client.user?.id}>`))
         return message.channel.send(FormatEmoji(`> - {e:chat} **Prazer, ${message.author.username}**! eu sou a **Satsuki**, uma incrivel bot **multifuncional** para o seu servidor. use o comando [ **${prefix}ajuda** ] para ver os meus comandos.`));
@@ -61,7 +61,7 @@ module["exports"] = {
 
         const miliseconds = client.cooldowns.get(`${message.author.id}-${command.name}`) / 1000;
 
-        if (command.category !== "desenvolvedor" && client.cooldowns.has(`${message.author.id}-${command.name}`))
+        if (command.infos?.category !== "desenvolvedor" && client.cooldowns.has(`${message.author.id}-${command.name}`))
         return message.channel.send(FormatEmoji(MESSAGE.COOLDOWNS.replace(/<name>|<cooldown>/g, (matched) => { return matched === "<name>" ? message.author.username : Math.trunc(miliseconds) })));
 
         client.cooldowns.set(`${message.author.id}-${command.name}`, Date.now() + 7000);

@@ -34,6 +34,8 @@ module["exports"] = {
             const params = (interaction.customId.match(/\[([^\]]*)\]/) || [, ''])[1].split(',').map(param => param.trim());
 
             const Button = params.length > 0 ? client.components.get(params[0]) : client.components.get(interaction.customId);
+            if (Button.authorOnly && interaction.user.id !== params[1])
+            return interaction.deferUpdate();
 
             params.shift()
             if (Button) Button.runner(client, interaction, params);
