@@ -18,6 +18,7 @@
     "dotenv": "^16.3.1",
     "glob": "^10.3.10",
     "mongoose": "^8.0.2",
+    "node-canvas-with-twemoji-and-discord-emoji": "^1.2.1",
     "quick.db": "^9.1.7",
     "util-stunks": "^1.2.8"
   }

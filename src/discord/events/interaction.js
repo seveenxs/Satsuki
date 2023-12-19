@@ -40,5 +40,16 @@ module["exports"] = {
             params.shift()
             if (Button) Button.runner(client, interaction, params);
         }
+
+        if (interaction.isModalSubmit()) {
+            const params = (interaction.customId.match(/\[([^\]]*)\]/) || [, ''])[1].split(',').map(param => param.trim());
+
+            const Modal = params.length > 0 ? client.components.get(params[0]) : client.components.get(interaction.customId);
+            if (Modal.authorOnly && interaction.user.id !== params[1])
+            return interaction.deferUpdate();
+
+            params.shift()
+            if (Modal) Modal.runner(client, interaction, params);
+        }
     }
 }

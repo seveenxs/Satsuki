@@ -4,7 +4,7 @@ require("dotenv").config();
 const client = new Satsuki({
         intents: 122627,
         prefix: "-",
-        developers: ["1170153272984739893", "1005290241743143043", "929182434120065065", "903186158937325569"],
+        developers: ["1170153272984739893"],
         token: process.env.token
 });
 

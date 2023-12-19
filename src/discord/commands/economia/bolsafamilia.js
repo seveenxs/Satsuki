@@ -13,12 +13,13 @@ module["exports"] = {
     },
     runner: async (client, message, params, prefix) => {
 
-        const cooldowns = await getUser(message.author.id, ["cooldowns"]);
-        const CoolDaily = cooldowns.get('daily');
+        const userDB = await getUser(message.author.id, ["cooldowns", "premium"]);
+        const CoolDaily = userDB.cooldowns.get('daily');
         if (CoolDaily > Date.now())
         return message.channel.send(`> - **(⏰) ›** Calma aí, **${message.author.username}**! você já resgatou a sua **recompensa diária** em um período de **24 horas**; volte novamente em [ <t:${Math.round(CoolDaily / 1000)}:R> ]`)
 
-        const Cristais = Math.floor(Math.random() * (1500 - 200)) + 200;
+        const isPremium = userDB.premium === true ? 2 : 1
+        const Cristais = Math.floor(Math.random() * (1500 - 200)) + 200 * isPremium;
 
         const buttons = Array.from({ length: 5 }, (_, i) => {
             return new ButtonBuilder()

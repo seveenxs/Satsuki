@@ -46,7 +46,7 @@ async function IncrementPresent(id, type, quantity) {
 async function IncrementCrystals(id, quantity) {
     const status = await hasRegister(id);
     if (!status) return;
-    await userDB.findOneAndUpdate({ _id: id}, { $inc: { "crystals": Math.max(0, quantity) } });
+    await userDB.findOneAndUpdate({ _id: id}, { $inc: { "crystals": quantity } });
 }
 
 async function DecrementPresent(id, type, quantity) {
