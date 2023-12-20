@@ -42,7 +42,7 @@ module["exports"] = [{
                 ephemeral: true
             });
         }
-
+        
         await userDB.findOneAndUpdate({ _id: params[0] }, { $set: { "profile.aboutme": Input }})
         .then(async () => {
             await createProfile(interaction, params, client)

@@ -32,6 +32,9 @@ module["exports"] = {
         const userCache = client.users.cache;
         const mentioned = userCache.get(params[0]) || userCache.find(user => user.username === params[0]) || mentions.first();
 
+        if (mentioned?.bot)
+        return message.channel.send(FormatEmoji(`> - {e:remove} **${message.author.username}**, o usuário especificado não pode ser um bot.`))
+
         const _userDB = await userDB.findById(message.author.id);
         const mentionedDB = await userDB.findById(mentioned?.id);
         const mentionArgs = !!mentions.size ? true : !!mentioned?.id ? true : false;
